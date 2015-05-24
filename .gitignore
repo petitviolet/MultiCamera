@@ -48,3 +48,6 @@ proguard/
 hs_err_pid*
 
 
+*.xml
+*.iml
+.idea

@@ -46,3 +46,7 @@ protected void onCreate(Bundle savedInstanceState) {
     cameraView.show();
 }
 ```
+
+# License
+
+[MIT License](http://petitviolet.mit-license.org/)

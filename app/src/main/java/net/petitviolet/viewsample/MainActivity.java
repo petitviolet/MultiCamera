@@ -2,31 +2,45 @@ package net.petitviolet.viewsample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import net.petitviolet.viewsample.view.CameraView;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    CameraView cameraView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LinearLayout container = (LinearLayout) findViewById(R.id.container);
-        final CameraView cameraView = (CameraView) findViewById(R.id.camera);
-        cameraView.createView(container);
-        cameraView.show();
+        cameraView = ((CameraView) findViewById(R.id.camera)).initView();
+//        cameraView.show();
         findViewById(R.id.take_picture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraView.takePicture();
+                cameraView.takePicture(new CameraView.TakePictureCallback() {
+                    @Override
+                    public void onSuccess(byte[] data) {
+                        Log.d("MainActivity", "onSuccess");
+                    }
+
+                    @Override
+                    public void onFail() {
+                        Log.d("MainActivity", "onFail");
+                    }
+                });
             }
         });
+        cameraView.show();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
     }
 
     @Override

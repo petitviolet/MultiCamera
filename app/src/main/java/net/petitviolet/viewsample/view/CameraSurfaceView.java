@@ -1,86 +1,53 @@
 package net.petitviolet.viewsample.view;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Point;
 import android.hardware.Camera;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
-import java.util.List;
+import net.petitviolet.viewsample.R;
 
-/**
- * TODO: document your custom view class.
- */
 public class CameraSurfaceView extends CameraView {
+    private static final String TAG = CameraSurfaceView.class.getSimpleName();
     private SurfaceView mSurfaceView;
-    private Camera mCamera;
 
     public CameraSurfaceView(Context context) {
         super(context);
-        mSurfaceView = new SurfaceView(mContext);
     }
 
     public CameraSurfaceView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mSurfaceView = new SurfaceView(mContext);
     }
 
     public CameraSurfaceView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        mSurfaceView = new SurfaceView(mContext);
     }
 
     @Override
     public void show() {
         // カメラの準備
-        super.show();
         SurfaceHolder holder = mSurfaceView.getHolder();
         holder.addCallback(callback);
+        Log.d(TAG, "show");
     }
 
     @Override
-    public void takePicture() {
-        mCamera.autoFocus(new Camera.AutoFocusCallback() {
-            @Override
-            public void onAutoFocus(boolean success, Camera camera) {
-                if (!success) return;
-                camera.takePicture(null, null, new Camera.PictureCallback() {
-                    @Override
-                    public void onPictureTaken(byte[] data, Camera camera) {
-                        showPicture(data);
-                    }
-                });
-            }
-        });
+    protected void setView() {
+        mView = LayoutInflater.from(mContext).inflate(R.layout.camera_surface, this, false);
+        addView(mView);
+        mSurfaceView = (SurfaceView) mView.findViewById(R.id.camera_surface);
     }
 
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
 
-        private Boolean isPortrait() {
-            int orientation = getResources().getConfiguration().orientation;
-            return (orientation == Configuration.ORIENTATION_PORTRAIT);
-        }
-
-        private void setCameraFocusMode() {
-            Camera.Parameters params = mCamera.getParameters();
-            List<String> supportedFocusModes = params.getSupportedFocusModes();
-            if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
-                // 継続的なフォーカスモード
-                params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-            } else if (supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-                // 継続的なフォーカスモード
-                params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-            } else {
-                params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            }
-            mCamera.setParameters(params);
-        }
-
         @Override
         public void surfaceCreated(SurfaceHolder surfaceHolder) {
+            Log.d(TAG, "camera open");
             mCamera = Camera.open();
             if (isPortrait()) {
                 //Portrait対応

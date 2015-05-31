@@ -2,6 +2,8 @@
 
 `SurfaceView`と`TextureView`を使い分けるCameraのCustomView
 
+![camera](./20150531-222444.png)
+
 # How To Use
 
 ```java

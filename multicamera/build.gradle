@@ -1,4 +1,9 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven'
+
+def libVersion = "0.1.0"
+def groupId = "net.petitviolet"
+def libName = "multicamera"
 
 android {
     compileSdkVersion 22
@@ -21,4 +26,16 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.1'
+}
+def deployTo = new File(rootDir, "repository")
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository url: "file://${deployTo.absolutePath}" // デプロイ先
+            pom.version = libVersion
+            pom.groupId = groupId
+            pom.artifactId = libName
+        }
+    }
 }

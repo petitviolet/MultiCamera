@@ -4,6 +4,20 @@
 
 ![camera](./20150531-222444.png)
 
+# build.gradle
+
+```groovy
+repositories {
+    maven {
+        url "https://raw.githubusercontent.com/petitviolet/MultiCamera/master/repository/"
+    }
+}
+
+dependencies {
+    compile "net.petitviolet:multicamera:0.1.0"
+}
+```
+
 # How To Use
 
 ```java

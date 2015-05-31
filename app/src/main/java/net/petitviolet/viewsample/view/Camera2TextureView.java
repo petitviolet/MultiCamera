@@ -82,11 +82,6 @@ public class Camera2TextureView extends CameraView {
         Log.d(TAG, "show");
     }
 
-    @Override
-    public void showPictureDialog(byte[] bytes) {
-        super.showPictureDialog(bytes);
-    }
-
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
 
     static {

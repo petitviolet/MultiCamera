@@ -1,20 +1,14 @@
 package net.petitviolet.viewsample.view;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import java.util.List;
 
@@ -77,30 +71,6 @@ public class CameraView extends FrameLayout {
         // Must to be Override
     }
 
-    public void showPictureDialog(byte[] bytes) {
-        ImageView imageView = new ImageView(mContext);
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        BitmapFactory.decodeByteArray(bytes, 0, 0, options);
-        options.inJustDecodeBounds = false;
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
-
-        imageView.setImageBitmap(bitmap);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageView.setAdjustViewBounds(true);
-        imageView.setLayoutParams(new ViewGroup.LayoutParams(getWidth(), getHeight()));
-        Dialog dialog = new Dialog(mContext);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(imageView);
-        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                restartCamera();
-            }
-        });
-        dialog.show();
-    }
-
     public void takePicture(final TakePictureCallback callback) {
         mCamera.autoFocus(new Camera.AutoFocusCallback() {
             @Override
@@ -121,7 +91,6 @@ public class CameraView extends FrameLayout {
                 camera.takePicture(null, null, new Camera.PictureCallback() {
                     @Override
                     public void onPictureTaken(byte[] data, Camera camera) {
-                        showPictureDialog(data);
                         if (callback != null) {
                             callback.onSuccess(data);
                         }
@@ -131,7 +100,7 @@ public class CameraView extends FrameLayout {
         });
     }
 
-    protected void restartCamera() {
+    public void restartCamera() {
         mCamera.startPreview();
     }
 

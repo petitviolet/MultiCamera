@@ -1,11 +1,18 @@
 package net.petitviolet.viewsample;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.ImageView;
 
 import net.petitviolet.viewsample.view.CameraView;
 
@@ -26,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(byte[] data) {
                         Log.d("MainActivity", "onSuccess");
+                        showPictureDialog(data);
                     }
 
                     @Override
@@ -36,6 +44,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         cameraView.show();
+    }
+
+    public void showPictureDialog(byte[] bytes) {
+        ImageView imageView = new ImageView(this);
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeByteArray(bytes, 0, 0, options);
+        options.inJustDecodeBounds = false;
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+
+        imageView.setImageBitmap(bitmap);
+        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setAdjustViewBounds(true);
+        imageView.setLayoutParams(new ViewGroup.LayoutParams(cameraView.getWidth(), cameraView.getHeight()));
+        Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(imageView);
+        dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                cameraView.restartCamera();
+            }
+        });
+        dialog.show();
     }
 
     @Override

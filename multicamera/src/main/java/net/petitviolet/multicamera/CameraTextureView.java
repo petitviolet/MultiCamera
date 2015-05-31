@@ -1,4 +1,4 @@
-package net.petitviolet.viewsample.view;
+package net.petitviolet.multicamera;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -11,8 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.TextureView;
 import android.view.WindowManager;
-
-import net.petitviolet.viewsample.R;
 
 import java.io.IOException;
 

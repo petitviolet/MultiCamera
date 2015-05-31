@@ -1,4 +1,4 @@
-package net.petitviolet.viewsample.view;
+package net.petitviolet.multicamera;
 
 import android.content.Context;
 import android.content.res.Configuration;

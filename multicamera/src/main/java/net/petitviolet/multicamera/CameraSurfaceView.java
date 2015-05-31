@@ -1,4 +1,4 @@
-package net.petitviolet.viewsample.view;
+package net.petitviolet.multicamera;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
-
-import net.petitviolet.viewsample.R;
 
 public class CameraSurfaceView extends CameraView {
     private static final String TAG = CameraSurfaceView.class.getSimpleName();

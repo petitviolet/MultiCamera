@@ -14,8 +14,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 
-import net.petitviolet.viewsample.view.CameraView;
-
+import net.petitviolet.multicamera.CameraView;
 
 public class MainActivity extends AppCompatActivity {
     CameraView cameraView;
@@ -25,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         cameraView = ((CameraView) findViewById(R.id.camera)).initView();
-//        cameraView.show();
         findViewById(R.id.take_picture).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

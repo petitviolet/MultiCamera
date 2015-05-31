@@ -1,4 +1,4 @@
-package net.petitviolet.viewsample.view;
+package net.petitviolet.multicamera;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -34,8 +34,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import net.petitviolet.viewsample.R;
 
 import java.io.File;
 import java.io.FileNotFoundException;
